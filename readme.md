@@ -1,0 +1,1 @@
+E:\code\maven_project\cloud_sdk\src\main\java\com\junjian\demo>javac -classpath ".;E:\code\maven_project\cloud_sdk\target\dependency\*" AmqpJavaClientDemo.java
