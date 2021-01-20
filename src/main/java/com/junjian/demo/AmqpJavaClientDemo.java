@@ -1,16 +1,4 @@
 package com.junjian.demo;
-
-/**
- * Hello world!
- *
- */
-// public class App 
-// {
-//     public static void main( String[] args )
-//     {
-//         System.out.println( "Hello World!" );
-//     }
-// }
 import java.net.URI;
 import java.util.Hashtable;
 import java.util.concurrent.ExecutorService;
@@ -40,27 +28,28 @@ public class AmqpJavaClientDemo {
 
     private final static Logger logger = LoggerFactory.getLogger(AmqpJavaClientDemo.class);
 
-    //ä¸šåŠ¡å¤„ç†å¼‚æ­¥çº¿ç¨‹æ± ï¼Œçº¿ç¨‹æ± å‚æ•°å¯ä»¥æ ¹æ®æ‚¨çš„ä¸šåŠ¡ç‰¹ç‚¹è°ƒæ•´ï¼Œæˆ–è€…æ‚¨ä¹Ÿå¯ä»¥ç”¨å…¶ä»–å¼‚æ­¥æ–¹å¼å¤„ç†æ¥æ”¶åˆ°çš„æ¶ˆæ¯ã€‚
+    //ÒµÎñ´¦ÀíÒì²½Ïß³Ì³Ø£¬Ïß³Ì³Ø²ÎÊı¿ÉÒÔ¸ù¾İÄúµÄÒµÎñÌØµãµ÷Õû£¬»òÕßÄúÒ²¿ÉÒÔÓÃÆäËûÒì²½·½Ê½´¦Àí½ÓÊÕµ½µÄÏûÏ¢¡£
     private final static ExecutorService executorService = new ThreadPoolExecutor(
         Runtime.getRuntime().availableProcessors(),
         Runtime.getRuntime().availableProcessors() * 2, 60, TimeUnit.SECONDS,
         new LinkedBlockingQueue<>(50000));
 
     public static void main(String[] args) throws Exception {
-        //å‚æ•°è¯´æ˜ï¼Œè¯·å‚è§AMQPå®¢æˆ·ç«¯æ¥å…¥è¯´æ˜æ–‡æ¡£ã€‚
-        String accessKey = "${YourAccessKey}";
-        String accessSecret = "${YourAccessSecret}";
-        String consumerGroupId = "${YourConsumerGroupId}";
-        //iotInstanceIdï¼šä¼ä¸šç‰ˆå®ä¾‹è¯·å¡«å†™å®ä¾‹IDï¼Œå…¬å…±å®ä¾‹è¯·å¡«ç©ºå­—ç¬¦ä¸²""ã€‚
-        String iotInstanceId = "${YourIotInstanceId}"; 
+        //²ÎÊıËµÃ÷£¬Çë²Î¼ûAMQP¿Í»§¶Ë½ÓÈëËµÃ÷ÎÄµµ¡£
+         System.out.println("²âÊÔ0");
+        String accessKey = "LTAI4GFfhARQM3MXV1b2ztsE";
+        String accessSecret = "5hkuHDzC6CoY9bShkBR7INVxaG3Vdn";
+        String consumerGroupId = "DEFAULT_GROUP";
+        //iotInstanceId£ºÆóÒµ°æÊµÀıÇëÌîĞ´ÊµÀıID£¬¹«¹²ÊµÀıÇëÌî¿Õ×Ö·û´®""¡£
+        String iotInstanceId = ""; 
         long timeStamp = System.currentTimeMillis();
-        //ç­¾åæ–¹æ³•ï¼šæ”¯æŒhmacmd5ã€hmacsha1å’Œhmacsha256ã€‚
+        //Ç©Ãû·½·¨£ºÖ§³Öhmacmd5¡¢hmacsha1ºÍhmacsha256¡£
         String signMethod = "hmacsha1";
-        //æ§åˆ¶å°æœåŠ¡ç«¯è®¢é˜…ä¸­æ¶ˆè´¹ç»„çŠ¶æ€é¡µå®¢æˆ·ç«¯IDä¸€æ å°†æ˜¾ç¤ºclientIdå‚æ•°ã€‚
-        //å»ºè®®ä½¿ç”¨æœºå™¨UUIDã€MACåœ°å€ã€IPç­‰å”¯ä¸€æ ‡è¯†ç­‰ä½œä¸ºclientIdã€‚ä¾¿äºæ‚¨åŒºåˆ†è¯†åˆ«ä¸åŒçš„å®¢æˆ·ç«¯ã€‚
-        String clientId = "${YourClientId}";
+        //¿ØÖÆÌ¨·şÎñ¶Ë¶©ÔÄÖĞÏû·Ñ×é×´Ì¬Ò³¿Í»§¶ËIDÒ»À¸½«ÏÔÊ¾clientId²ÎÊı¡£
+        //½¨ÒéÊ¹ÓÃ»úÆ÷UUID¡¢MACµØÖ·¡¢IPµÈÎ¨Ò»±êÊ¶µÈ×÷ÎªclientId¡£±ãÓÚÄúÇø·ÖÊ¶±ğ²»Í¬µÄ¿Í»§¶Ë¡£
+        String clientId = "192.168.1.104";
 
-        //userNameç»„è£…æ–¹æ³•ï¼Œè¯·å‚è§AMQPå®¢æˆ·ç«¯æ¥å…¥è¯´æ˜æ–‡æ¡£ã€‚
+        //userName×é×°·½·¨£¬Çë²Î¼ûAMQP¿Í»§¶Ë½ÓÈëËµÃ÷ÎÄµµ¡£
         String userName = clientId + "|authMode=aksign"
             + ",signMethod=" + signMethod
             + ",timestamp=" + timeStamp
@@ -68,11 +57,11 @@ public class AmqpJavaClientDemo {
             + ",iotInstanceId=" + iotInstanceId
             + ",consumerGroupId=" + consumerGroupId
             + "|";
-        //è®¡ç®—ç­¾åï¼Œpasswordç»„è£…æ–¹æ³•ï¼Œè¯·å‚è§AMQPå®¢æˆ·ç«¯æ¥å…¥è¯´æ˜æ–‡æ¡£ã€‚
+        //¼ÆËãÇ©Ãû£¬password×é×°·½·¨£¬Çë²Î¼ûAMQP¿Í»§¶Ë½ÓÈëËµÃ÷ÎÄµµ¡£
         String signContent = "authId=" + accessKey + "&timestamp=" + timeStamp;
         String password = doSign(signContent,accessSecret, signMethod);
-        //æ¥å…¥åŸŸåï¼Œè¯·å‚è§AMQPå®¢æˆ·ç«¯æ¥å…¥è¯´æ˜æ–‡æ¡£ã€‚
-        String connectionUrl = "failover:(amqps://${YourHost}:5671?amqp.idleTimeout=80000)"
+        //½ÓÈëÓòÃû£¬Çë²Î¼ûAMQP¿Í»§¶Ë½ÓÈëËµÃ÷ÎÄµµ¡£
+        String connectionUrl = "failover:(amqps://1242263789485138.iot-amqp.cn-shanghai.aliyuncs.com:5671?amqp.idleTimeout=80000)"
             + "?failover.reconnectDelay=30";
 
         Hashtable<String, String> hashtable = new Hashtable<>();
@@ -82,38 +71,41 @@ public class AmqpJavaClientDemo {
         Context context = new InitialContext(hashtable);
         ConnectionFactory cf = (ConnectionFactory)context.lookup("SBCF");
         Destination queue = (Destination)context.lookup("QUEUE");
-        // åˆ›å»ºè¿æ¥ã€‚
+        // ´´½¨Á¬½Ó¡£
         Connection connection = cf.createConnection(userName, password);
         ((JmsConnection) connection).addConnectionListener(myJmsConnectionListener);
-        // åˆ›å»ºä¼šè¯ã€‚
-        // Session.CLIENT_ACKNOWLEDGE: æ”¶åˆ°æ¶ˆæ¯åï¼Œéœ€è¦æ‰‹åŠ¨è°ƒç”¨message.acknowledge()ã€‚
-        // Session.AUTO_ACKNOWLEDGE: SDKè‡ªåŠ¨ACKï¼ˆæ¨èï¼‰ã€‚
+        // ´´½¨»á»°¡£
+        // Session.CLIENT_ACKNOWLEDGE: ÊÕµ½ÏûÏ¢ºó£¬ĞèÒªÊÖ¶¯µ÷ÓÃmessage.acknowledge()¡£
+        // Session.AUTO_ACKNOWLEDGE: SDK×Ô¶¯ACK£¨ÍÆ¼ö£©¡£
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         connection.start();
-        // åˆ›å»ºReceiverè¿æ¥ã€‚
+        // ´´½¨ReceiverÁ¬½Ó¡£
         MessageConsumer consumer = session.createConsumer(queue);
         consumer.setMessageListener(messageListener);
+        System.out.println("²âÊÔ0.1");
     }
 
     private static MessageListener messageListener = new MessageListener() {
         @Override
         public void onMessage(Message message) {
             try {
-                //1.æ”¶åˆ°æ¶ˆæ¯ä¹‹åä¸€å®šè¦ACKã€‚
-                // æ¨èåšæ³•ï¼šåˆ›å»ºSessioné€‰æ‹©Session.AUTO_ACKNOWLEDGEï¼Œè¿™é‡Œä¼šè‡ªåŠ¨ACKã€‚
-                // å…¶ä»–åšæ³•ï¼šåˆ›å»ºSessioné€‰æ‹©Session.CLIENT_ACKNOWLEDGEï¼Œè¿™é‡Œä¸€å®šè¦è°ƒmessage.acknowledge()æ¥ACKã€‚
+                System.out.println("²âÊÔ1");
+                //1.ÊÕµ½ÏûÏ¢Ö®ºóÒ»¶¨ÒªACK¡£
+                // ÍÆ¼ö×ö·¨£º´´½¨SessionÑ¡ÔñSession.AUTO_ACKNOWLEDGE£¬ÕâÀï»á×Ô¶¯ACK¡£
+                // ÆäËû×ö·¨£º´´½¨SessionÑ¡ÔñSession.CLIENT_ACKNOWLEDGE£¬ÕâÀïÒ»¶¨Òªµ÷message.acknowledge()À´ACK¡£
                 // message.acknowledge();
-                //2.å»ºè®®å¼‚æ­¥å¤„ç†æ”¶åˆ°çš„æ¶ˆæ¯ï¼Œç¡®ä¿onMessageå‡½æ•°é‡Œæ²¡æœ‰è€—æ—¶é€»è¾‘ã€‚
-                // å¦‚æœä¸šåŠ¡å¤„ç†è€—æ—¶è¿‡ç¨‹è¿‡é•¿é˜»å¡ä½çº¿ç¨‹ï¼Œå¯èƒ½ä¼šå½±å“SDKæ”¶åˆ°æ¶ˆæ¯åçš„æ­£å¸¸å›è°ƒã€‚
+                //2.½¨ÒéÒì²½´¦ÀíÊÕµ½µÄÏûÏ¢£¬È·±£onMessageº¯ÊıÀïÃ»ÓĞºÄÊ±Âß¼­¡£
+                // Èç¹ûÒµÎñ´¦ÀíºÄÊ±¹ı³Ì¹ı³¤×èÈû×¡Ïß³Ì£¬¿ÉÄÜ»áÓ°ÏìSDKÊÕµ½ÏûÏ¢ºóµÄÕı³£»Øµ÷¡£
                 executorService.submit(() -> processMessage(message));
             } catch (Exception e) {
+                System.out.println("²âÊÔ2");
                 logger.error("submit task occurs exception ", e);
             }
         }
     };
 
     /**
-     * åœ¨è¿™é‡Œå¤„ç†æ‚¨æ”¶åˆ°æ¶ˆæ¯åçš„å…·ä½“ä¸šåŠ¡é€»è¾‘ã€‚
+     * ÔÚÕâÀï´¦ÀíÄúÊÕµ½ÏûÏ¢ºóµÄ¾ßÌåÒµÎñÂß¼­¡£
      */
     private static void processMessage(Message message) {
         try {
@@ -132,7 +124,7 @@ public class AmqpJavaClientDemo {
 
     private static JmsConnectionListener myJmsConnectionListener = new JmsConnectionListener() {
         /**
-         * è¿æ¥æˆåŠŸå»ºç«‹ã€‚
+         * Á¬½Ó³É¹¦½¨Á¢¡£
          */
         @Override
         public void onConnectionEstablished(URI remoteURI) {
@@ -140,7 +132,7 @@ public class AmqpJavaClientDemo {
         }
 
         /**
-         * å°è¯•è¿‡æœ€å¤§é‡è¯•æ¬¡æ•°ä¹‹åï¼Œæœ€ç»ˆè¿æ¥å¤±è´¥ã€‚
+         * ³¢ÊÔ¹ı×î´óÖØÊÔ´ÎÊıÖ®ºó£¬×îÖÕÁ¬½ÓÊ§°Ü¡£
          */
         @Override
         public void onConnectionFailure(Throwable error) {
@@ -148,7 +140,7 @@ public class AmqpJavaClientDemo {
         }
 
         /**
-         * è¿æ¥ä¸­æ–­ã€‚
+         * Á¬½ÓÖĞ¶Ï¡£
          */
         @Override
         public void onConnectionInterrupted(URI remoteURI) {
@@ -156,7 +148,7 @@ public class AmqpJavaClientDemo {
         }
 
         /**
-         * è¿æ¥ä¸­æ–­ååˆè‡ªåŠ¨é‡è¿ä¸Šã€‚
+         * Á¬½ÓÖĞ¶ÏºóÓÖ×Ô¶¯ÖØÁ¬ÉÏ¡£
          */
         @Override
         public void onConnectionRestored(URI remoteURI) {
@@ -177,7 +169,7 @@ public class AmqpJavaClientDemo {
     };
 
     /**
-     * è®¡ç®—ç­¾åï¼Œpasswordç»„è£…æ–¹æ³•ï¼Œè¯·å‚è§AMQPå®¢æˆ·ç«¯æ¥å…¥è¯´æ˜æ–‡æ¡£ã€‚
+     * ¼ÆËãÇ©Ãû£¬password×é×°·½·¨£¬Çë²Î¼ûAMQP¿Í»§¶Ë½ÓÈëËµÃ÷ÎÄµµ¡£
      */
     private static String doSign(String toSignString, String secret, String signMethod) throws Exception {
         SecretKeySpec signingKey = new SecretKeySpec(secret.getBytes(), signMethod);
