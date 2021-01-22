@@ -37,8 +37,8 @@ public class AmqpJavaClientDemo {
     public static void main(String[] args) throws Exception {
         //参数说明，请参见AMQP客户端接入说明文档。
          System.out.println("测试0");
-        String accessKey = "LTAI4GFfhARQM3MXV1b2ztsE";
-        String accessSecret = "5hkuHDzC6CoY9bShkBR7INVxaG3Vdn";
+        String accessKey = "";
+        String accessSecret = "";
         String consumerGroupId = "DEFAULT_GROUP";
         //iotInstanceId：企业版实例请填写实例ID，公共实例请填空字符串""。
         String iotInstanceId = ""; 
@@ -114,6 +114,10 @@ public class AmqpJavaClientDemo {
             String topic = message.getStringProperty("topic");
             String messageId = message.getStringProperty("messageId");
             logger.info("receive message"
+                + ", topic = " + topic
+                + ", messageId = " + messageId
+                + ", content = " + content);
+            System.out.println("receive message"
                 + ", topic = " + topic
                 + ", messageId = " + messageId
                 + ", content = " + content);
